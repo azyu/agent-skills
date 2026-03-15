@@ -1,0 +1,4 @@
+interface:
+  display_name: "Instruction Writer"
+  short_description: "Write or rewrite prompts into actionable agent rules"
+  default_prompt: "Use $instruction-writer to write or rewrite this instruction file into concrete MUST/SHOULD rules with explicit fallback behavior."
