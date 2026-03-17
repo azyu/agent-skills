@@ -68,5 +68,36 @@ class ResolveTerminalTests(unittest.TestCase):
             )
 
 
+class MarkdownFormattingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.search = load_search_module()
+
+    def test_formats_markdown_bullet_output(self):
+        text = self.search.format_markdown_output(
+            resolved_depr_nm="서울경부",
+            depr_cd="010",
+            resolved_arvl_nm="부산",
+            arvl_cd="700",
+            date_label="2026년 2월 14일 토요일",
+            results=[
+                {"time": "09:20", "grade": "우등", "remain_seats": 26, "status": "선택"},
+                {"time": "10:00", "grade": "프리미엄", "remain_seats": 8, "status": "선택"},
+            ],
+            correction_lines=["출발지 자동 보정: 서울 -> 서울경부"],
+        )
+        self.assertEqual(
+            text,
+            "\n".join(
+                [
+                    "- 출발지 자동 보정: 서울 -> 서울경부",
+                    "- 서울경부(010) -> 부산(700) | 2026년 2월 14일 토요일",
+                    "- 09:20 | 우등 | 26석 | 선택",
+                    "- 10:00 | 프리미엄 | 8석 | 선택",
+                ]
+            ),
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

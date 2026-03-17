@@ -29,17 +29,14 @@ python3 scripts/search.py "서울경부" "부산" "2월 14일" --json
 
 ## Response Samples
 
-Human-readable table output:
+Human-readable Markdown bullet output:
 
 ```text
-↪ 출발지 자동 보정: 서울 -> 서울경부
-🔍 검색: 서울경부(010) -> 부산(700) [2026년 2월 14일 토요일]
-
-출발   | 등급         | 잔여석   | 상태
----------------------------------------------
-09 : 20 | 우등         | 26 석    | 선택
-10 : 00 | 프리미엄      | 8 석     | 선택
-11 : 10 | 일반         | 0 석     | 매진
+- 출발지 자동 보정: 서울 -> 서울경부
+- 서울경부(010) -> 부산(700) | 2026년 2월 14일 토요일
+- 09:20 | 우등 | 26석 | 선택
+- 10:00 | 프리미엄 | 8석 | 선택
+- 11:10 | 일반 | 0석 | 매진
 ```
 
 Structured JSON output:
@@ -101,6 +98,13 @@ If the best match is not clearly better than the next candidates, the script doe
 - `--json` prints only JSON on success.
 - On terminal resolution or date parsing failures, `--json` returns an object with an `error` field.
 - This mode is appropriate when another tool needs to parse the output without human-readable log lines.
+
+## Text Output
+
+- The default non-JSON mode is optimized for Slack and Telegram paste-in use.
+- The script prints a flat Markdown bullet list instead of a fixed-width table.
+- Auto-corrections appear first, followed by one summary bullet and one bullet per departure.
+- This avoids alignment issues in chat clients that do not preserve monospaced spacing consistently.
 
 ## Operational Notes
 

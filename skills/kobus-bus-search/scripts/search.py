@@ -126,6 +126,27 @@ def resolve_terminal(name, candidates):
     raise ValueError("지원하지 않거나 알 수 없는 터미널입니다.")
 
 
+def format_markdown_output(
+    resolved_depr_nm,
+    depr_cd,
+    resolved_arvl_nm,
+    arvl_cd,
+    date_label,
+    results,
+    correction_lines=None,
+):
+    lines = []
+    for correction_line in correction_lines or []:
+        lines.append(f"- {correction_line}")
+
+    lines.append(f"- {resolved_depr_nm}({depr_cd}) -> {resolved_arvl_nm}({arvl_cd}) | {date_label}")
+    for result in results:
+        lines.append(
+            f"- {result['time']} | {result['grade']} | {result['remain_seats']}석 | {result['status']}"
+        )
+    return "\n".join(lines)
+
+
 def search_bus(depr_nm, arvl_nm, date_str, output_json=False):
     def log(msg):
         if not output_json:
@@ -173,15 +194,11 @@ def search_bus(depr_nm, arvl_nm, date_str, output_json=False):
     except Exception as e:
         exit_error(f"❌ 날짜 처리 오류: {e}")
 
+    correction_lines = []
     if resolved_depr_nm != depr_nm:
-        log(f"↪ 출발지 자동 보정: {depr_nm} -> {resolved_depr_nm}")
+        correction_lines.append(f"출발지 자동 보정: {depr_nm} -> {resolved_depr_nm}")
     if resolved_arvl_nm != arvl_nm:
-        log(f"↪ 도착지 자동 보정: {arvl_nm} -> {resolved_arvl_nm}")
-
-    log(
-        f"🔍 검색: {resolved_depr_nm}({depr_cd}) -> {resolved_arvl_nm}({arvl_cd}) "
-        f"[{target_dt.year}년 {target_dt.month}월 {target_dt.day}일 {wd}요일]"
-    )
+        correction_lines.append(f"도착지 자동 보정: {arvl_nm} -> {resolved_arvl_nm}")
 
     init_url = "https://m.kobus.co.kr/mrs/rotinf.do"
     try:
@@ -226,12 +243,16 @@ def search_bus(depr_nm, arvl_nm, date_str, output_json=False):
         if output_json:
             print(json.dumps([]))
         else:
-            print("❌ 배차 정보가 없거나 파싱에 실패했습니다. (매진이거나 해당 일자 운행이 없을 수 있습니다)")
+            lines = correction_lines[:]
+            lines.append(
+                f"조회 결과 없음: {resolved_depr_nm}({depr_cd}) -> {resolved_arvl_nm}({arvl_cd}) | "
+                f"{target_dt.year}년 {target_dt.month}월 {target_dt.day}일 {wd}요일"
+            )
+            lines.append("배차 정보가 없거나 파싱에 실패했습니다. 매진이거나 해당 일자 운행이 없을 수 있습니다.")
+            print("\n".join(f"- {line}" for line in lines))
         return
 
     results = []
-    log(f"\n{'출발':<6} | {'등급':<10} | {'잔여석':<6} | {'상태'}")
-    log("-" * 45)
 
     for row in rows:
         time_txt = row.css(".start_time::text").get(default="").strip()
@@ -254,13 +275,21 @@ def search_bus(depr_nm, arvl_nm, date_str, output_json=False):
                 "status": status_txt,
             }
         )
-        log(f"{time_txt:<6} | {grade_simple:<10} | {remain_txt:<6} | {status_txt}")
-
-    if not results:
-        log("\n(조회된 배차가 없습니다.)")
 
     if output_json:
         print(json.dumps(results, ensure_ascii=False, indent=2))
+    else:
+        print(
+            format_markdown_output(
+                resolved_depr_nm=resolved_depr_nm,
+                depr_cd=depr_cd,
+                resolved_arvl_nm=resolved_arvl_nm,
+                arvl_cd=arvl_cd,
+                date_label=f"{target_dt.year}년 {target_dt.month}월 {target_dt.day}일 {wd}요일",
+                results=results,
+                correction_lines=correction_lines,
+            )
+        )
 
 
 if __name__ == "__main__":
