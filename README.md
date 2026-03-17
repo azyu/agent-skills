@@ -36,12 +36,9 @@ skills/
 
 - `gemini-google-web-search`: current web research through Gemini CLI's `google_web_search` tool
 - `instruction-writer`: rewrite prompts and instruction files into concrete, model-friendly rules
-- `kobus-bus-search`: query Kobus bus schedules and remaining seats
 - `shell-script`: create, edit, and review shell scripts with shell-specific guidance
-
-## Development
-
-This repository now uses `skills/` as the canonical root for distributable skills. If you add a new skill, place it under `skills/<name>/`.
+- `kobus-bus-search`: query Kobus bus schedules and remaining seats
+<img width="460" height="608" alt="스크린샷 2026-03-17 오후 1 53 51" src="https://github.com/user-attachments/assets/061536de-cee0-45fd-854e-7fb3f7da80a6" />
 
 ## License
 
