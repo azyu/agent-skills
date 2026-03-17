@@ -25,7 +25,7 @@ Use this skill for:
 
 - If a target document exists, read the actual file before proposing rewrites
 - If no target document exists, extract the intended goals, operating boundaries, and fallback behavior before drafting
-- Identify repeated patterns such as `don't`, `do not`, `never`, `no`, `nothing`, or vague warnings like "avoid hallucination"
+- Identify repeated patterns such as `don't`, `do not`, `never`, `no`, or vague warnings like "avoid hallucination"
 - Separate three cases:
   - style-only rewrites
   - behavior rewrites

@@ -1,0 +1,13 @@
+{
+  "name": "@azyu/agent-skills",
+  "private": true,
+  "description": "Personal skills collection for the skills CLI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/azyu/agent-skills.git"
+  },
+  "scripts": {
+    "list:skills": "find skills -name SKILL.md | sort"
+  }
+}

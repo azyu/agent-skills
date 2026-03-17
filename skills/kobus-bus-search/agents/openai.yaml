@@ -1,0 +1,7 @@
+interface:
+  display_name: "Kobus Bus Search"
+  short_description: "Real-time Kobus schedules and seat lookup"
+  default_prompt: "Use $kobus-bus-search to check Kobus departures and remaining seats between supported terminals."
+
+policy:
+  allow_implicit_invocation: true
