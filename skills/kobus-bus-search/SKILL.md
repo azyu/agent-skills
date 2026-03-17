@@ -1,6 +1,6 @@
 ---
 name: kobus-bus-search
-description: Query real-time Kobus express bus schedules and remaining seats from kobus.co.kr. Use when a user asks for high-speed bus departure times, seat availability, or route lookups between supported Korean terminals.
+description: 사용자가 지원되는 한국 터미널 간 고속버스 출발 시간, 잔여 좌석, 또는 노선 조회를 요청할 때 사용합니다.
 ---
 
 # Kobus Bus Search
