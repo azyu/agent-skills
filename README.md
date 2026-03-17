@@ -13,7 +13,7 @@ npx skills add azyu/agent-skills --list
 Install a specific skill:
 
 ```bash
-npx skills add azyu/agent-skills kobus-bus-search
+npx skills add azyu/agent-skills --skill kobus-bus-search
 ```
 
 ## Repository Layout
