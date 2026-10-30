@@ -2,6 +2,10 @@
 
 Personal skills collection for the `skills` CLI, organized in the same repository-style layout used by public skill catalogs.
 
+## Runtime
+
+Repository maintenance scripts use Node.js 26.13.0 or newer (see `.nvmrc` and `package.json`). This is a repository-local tooling baseline; it does not make a Node.js runtime compatibility claim for installed skills or consumer projects.
+
 ## Install
 
 List available skills from GitHub:
