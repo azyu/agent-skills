@@ -2,6 +2,9 @@
   "name": "@azyu/agent-skills",
   "private": true,
   "description": "Personal skills collection for the skills CLI",
+  "engines": {
+    "node": ">=26.13.0"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
